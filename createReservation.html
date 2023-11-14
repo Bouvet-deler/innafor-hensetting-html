@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="nb">
+
+<head>
+    <meta charset="utf-8">
+    <title>InnaNor</title>
+    <link rel="icon" type="image/svg+xml" href="img/logo.svg">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+<nav>
+    <a href="index.html"><img src="img/logo.svg" class="logo" alt="Logo"></a>
+    <a href="locations.html">Lokasjoner</a>
+    <a href="spaces.html">Hensettingsplasser</a>
+    <a href="reservations.html">Reservasjoner</a>
+    <a href="createReservation.html" class="current-nav">Reserver</a>
+</nav>
+<h1>Hensetting</h1>
+<h2>Bilde av Sandnes stasjon</h2>
+<img src="img/tog_ved_stasjon.jpg" class="tog-ved-stasjon" alt="Tog ved Sandnes stasjon">
+<script>
+    const locationsTableBody = document.querySelector('tbody#locations-table-body');
+
+    async function createReservation(reservation) {
+        const response = await fetch("http://f21-eksempel.azurewebsites.net/reservations", {
+            method: "POST",
+            body: JSON.stringify(reservation),
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json;charset=UTF-8",
+            },
+        });
+        if (response.status === 404)
+            throw new Error(
+                `${response.status}: ${response.statusText} on ${response.url}`
+            );
+        return await response.json();
+    }
+
+    fetch('http://f21-eksempel.azurewebsites.net/locations')
+        .then(response => response.json())
+        .then(locations => {
+            for (const locationObject of locations) {
+                locationsTableBody.insertAdjacentHTML(
+                    'beforeend',
+                    `<tr>
+    <td><a href="locationsDetail.html#${locationObject.id}">${locationObject.id}</a></td>
+    <td>${locationObject.trackNumber}</td>
+    <td>${locationObject.area}</td>
+    <td>${locationObject.status}</td>
+    </tr>`);
+            }
+        });
+
+</script>
+</body>
+
+</html>
