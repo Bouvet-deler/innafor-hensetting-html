@@ -16,11 +16,47 @@
     <a href="reservations.html">Reservasjoner</a>
     <a href="createReservation.html" class="current-nav">Reserver</a>
 </nav>
-<h1>Hensetting</h1>
-<h2>Bilde av Sandnes stasjon</h2>
-<img src="img/tog_ved_stasjon.jpg" class="tog-ved-stasjon" alt="Tog ved Sandnes stasjon">
+
+<form id="reservation-form">
+    <h1>Ny reservasjon?</h1>
+    <label>Hensettingsplass
+        <input id="space" name="space" type="number" value="0"></label>
+    <label>
+        Reserveres av
+        <input id="reserved-by" name="reserved-by" value="">
+    </label>
+    <label>
+        Starttid
+        <input id="start-time" name="start-time" type="datetime-local" value="">
+    </label>
+    <label>
+        Slutttid
+        <input id="end-time" name="end-time" type="datetime-local" value="">
+    </label>
+    <label>
+        Notater
+        <input id="notes" name="notes" value="">
+    </label>
+    <button type="submit">Reserver</button>
+</form>
+
 <script>
-    const locationsTableBody = document.querySelector('tbody#locations-table-body');
+
+    const reservationForm = document.getElementById("reservation-form");
+    reservationForm.addEventListener("submit", onReservationSubmit);
+
+    function onReservationSubmit(event) {
+        const reservationInput = {
+            spaceId: document.getElementById("space").valueAsNumber,
+            reserver: document.getElementById("reserved-by").value,
+            startTime: document.getElementById("start-time").valueAsDate,
+            endTime: document.getElementById("end-time").valueAsDate,
+            notes: document.getElementById("notes").value,
+        }
+        createReservation(reservationInput)
+            .then((result) => alert(JSON.stringify(result)));
+        event.preventDefault();
+    }
 
     async function createReservation(reservation) {
         const response = await fetch("http://f21-eksempel.azurewebsites.net/reservations", {
@@ -37,21 +73,6 @@
             );
         return await response.json();
     }
-
-    fetch('http://f21-eksempel.azurewebsites.net/locations')
-        .then(response => response.json())
-        .then(locations => {
-            for (const locationObject of locations) {
-                locationsTableBody.insertAdjacentHTML(
-                    'beforeend',
-                    `<tr>
-    <td><a href="locationsDetail.html#${locationObject.id}">${locationObject.id}</a></td>
-    <td>${locationObject.trackNumber}</td>
-    <td>${locationObject.area}</td>
-    <td>${locationObject.status}</td>
-    </tr>`);
-            }
-        });
 
 </script>
 </body>
