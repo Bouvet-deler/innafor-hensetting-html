@@ -16,8 +16,25 @@
     <a href="reservations.html">Reservasjoner</a>
     <a href="createReservation.html">Reserver</a>
 </nav>
-<h1>Hensettingsplass</h1>
-<strong style="font-size: 10em">TODO</strong>
+
+<h1 id="space-title">Hensettingsplass</h1>
+
+<span id="space-content"></span>
+
+<script>
+    const spaceTitle = document.querySelector('#space-title');
+    const spaceContent = document.querySelector('#space-content');
+    const spaceId = location.hash.substring(1);
+
+    spaceTitle.innerText = 'Lokasjon ' + spaceId;
+
+    fetch('http://f21-eksempel.azurewebsites.net/spaces/' + spaceId)
+        .then(response => response.json())
+        .then(spaceObject => {
+            spaceContent.innerText = JSON.stringify(spaceObject);
+        });
+
+</script>
 </body>
 
 </html>

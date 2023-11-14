@@ -16,8 +16,24 @@
     <a href="reservations.html" class="current-nav">Reservasjoner</a>
     <a href="createReservation.html">Reserver</a>
 </nav>
-<h1>Reservasjon</h1>
-<strong style="font-size: 10em">TODO</strong>
+
+<h1 id="reservation-title">Reservasjon</h1>
+<span id="reservation-content"></span>
+
+<script>
+    const reservationTitle = document.querySelector('#reservation-title');
+    const reservationContent = document.querySelector('#reservation-content');
+    const reservationId = location.hash.substring(1);
+
+    reservationTitle.innerText = 'Lokasjon ' + reservationId;
+
+    fetch('http://f21-eksempel.azurewebsites.net/reservations/' + reservationId)
+        .then(response => response.json())
+        .then(reservationObject => {
+            reservationContent.innerText = JSON.stringify(reservationObject);
+        });
+
+</script>
 </body>
 
 </html>
