@@ -16,9 +16,43 @@
     <a href="reservations.html">Reservasjoner</a>
     <a href="createReservation.html" class="current-nav">Reserver</a>
 </nav>
-<h1>Hensetting</h1>
-<h2>Bilde av Sandnes stasjon</h2>
-<img src="img/tog_ved_stasjon.jpg" class="tog-ved-stasjon" alt="Tog ved Sandnes stasjon">
+<h1>Reservasjoner</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Hensettingsplassid</th>
+        <th>Hensettingsplassnavn</th>
+        <th>Reservert av</th>
+        <th>Starttidspunkt</th>
+        <th>Slutttidspunkt</th>
+    </tr>
+    </thead>
+
+    <tbody id="reservations-table-body"></tbody>
+</table>
+
+<script>
+    const reservationsTableBody = document.querySelector('tbody#reservations-table-body');
+
+    fetch('http://f21-eksempel.azurewebsites.net/reservations')
+        .then(response => response.json())
+        .then(reservations => {
+            for (const reservationObject of reservations) {
+                reservationsTableBody.insertAdjacentHTML(
+                    'beforeend',
+                    `<tr>
+    <td><a href="reservationDetail.html#${reservationObject.id}">${reservationObject.id}</a></td>
+        <td><a href="spaceDetail.html#${reservationObject.spaceId}">${reservationObject.spaceId}</a></td>
+        <td>${reservationObject.spaceName}</td>
+        <td>${reservationObject.reserver}</td>
+        <td>${reservationObject.startTime}</td>
+        <td>${reservationObject.endTime}</td>
+    </tr>`);
+            }
+        });
+
+</script>
 </body>
 
 </html>
