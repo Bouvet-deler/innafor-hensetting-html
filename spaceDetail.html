@@ -21,12 +21,16 @@
 
 <span id="space-content"></span>
 
+<a id="reservations-link" href="spaceReservations.html">Reservasjoner</a>
+
 <script>
     const spaceTitle = document.querySelector('#space-title');
     const spaceContent = document.querySelector('#space-content');
+    const reservationsLink = document.querySelector('#reservations-link');
     const spaceId = location.hash.substring(1);
 
     spaceTitle.innerText = 'Lokasjon ' + spaceId;
+    reservationsLink.href = 'spaceReservations.html#' + spaceId;
 
     fetch('http://f21-eksempel.azurewebsites.net/spaces/' + spaceId)
         .then(response => response.json())
