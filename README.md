@@ -1,7 +1,7 @@
 # Innafor 2023 F21 - Hensetting - frontend uten bibliotek eller rammeverk
 
 Dette prosjektet er ment som eksempel på hvordan man kan hente og bruke data i Innafor gruppeprosjektet for F21 i 2023.
-Prosjektet er skrevet i HTML filer med JavaScript og CSS, og skal være mulig å åpne direkte i nettlseren eller gjennom en webserver.
+Prosjektet er skrevet i HTML filer med JavaScript og CSS, og skal være mulig å åpne direkte i nettleseren eller gjennom en webserver.
 
 ## Formål
 
