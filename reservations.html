@@ -39,16 +39,14 @@
         .then(response => response.json())
         .then(reservations => {
             for (const reservationObject of reservations) {
-                reservationsTableBody.insertAdjacentHTML(
-                    'beforeend',
-                    `<tr>
-    <td><a href="reservationDetail.html#${reservationObject.id}">${reservationObject.id}</a></td>
-        <td><a href="spaceDetail.html#${reservationObject.spaceId}">${reservationObject.spaceId}</a></td>
-        <td>${reservationObject.spaceName}</td>
-        <td>${reservationObject.reserver}</td>
-        <td>${reservationObject.startTime}</td>
-        <td>${reservationObject.endTime}</td>
-    </tr>`);
+                const row = document.createElement('tr');
+                row.insertCell(0).innerHTML = `<a href="reservationDetail.html#${reservationObject.id}">${reservationObject.id}</a>`;
+                row.insertCell(1).innerHTML = `<a href="spaceDetail.html#${reservationObject.spaceId}">${reservationObject.spaceId}</a>`
+                row.insertCell(2).innerText = reservationObject.spaceName;
+                row.insertCell(3).innerText = reservationObject.reserver;
+                row.insertCell(4).innerText = reservationObject.startTime;
+                row.insertCell(5).innerText = reservationObject.endTime;
+                reservationsTableBody.appendChild(row);
             }
         });
 

@@ -34,13 +34,11 @@
         .then(response => response.json())
         .then(spaces => {
             for (const spaceObject of spaces) {
-                spacesTableBody.insertAdjacentHTML(
-                    'beforeend',
-                    `<tr>
-    <td><a href="spaceDetail.html#${spaceObject.id}">${spaceObject.id}</a></td>
-        <td>${spaceObject.name}</td>
-        <td>${spaceObject.description}</td>
-    </tr>`);
+                const row = document.createElement('tr');
+                row.insertCell(0).innerHTML = `<a href="spaceDetail.html#${spaceObject.id}">${spaceObject.id}</a>`;
+                row.insertCell(1).innerText = spaceObject.name;
+                row.insertCell(2).innerText = spaceObject.description;
+                spacesTableBody.appendChild(row);
             }
         });
 

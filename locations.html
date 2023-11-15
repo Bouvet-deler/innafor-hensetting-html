@@ -38,14 +38,12 @@
         .then(response => response.json())
         .then(locations => {
             for (const locationObject of locations) {
-                locationsTableBody.insertAdjacentHTML(
-                    'beforeend',
-                    `<tr>
-    <td><a href="locationsDetail.html#${locationObject.id}">${locationObject.id}</a></td>
-    <td>${locationObject.trackNumber}</td>
-    <td>${locationObject.area}</td>
-    <td>${locationObject.status}</td>
-    </tr>`);
+                const row = document.createElement('tr');
+                row.insertCell(0).innerHTML = `<a href="locationDetail.html#${locationObject.id}">${locationObject.id}</a>`;
+                row.insertCell(1).innerText = locationObject.trackNumber;
+                row.insertCell(2).innerText = locationObject.area;
+                row.insertCell(3).innerText = locationObject.status;
+                locationsTableBody.appendChild(row);
             }
         });
 
